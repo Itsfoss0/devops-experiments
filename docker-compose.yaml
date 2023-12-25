@@ -1,0 +1,31 @@
+version: '3'
+services:
+  db:
+    image: mysql:8.1.0
+    env_file:
+      ./staging.env
+    networks:
+      - staging
+    ports:
+      - '3304:3306'
+    volumes:
+      - db:/var/lib/mysql
+  
+  api:
+    image: stud-api:0.0.3
+    env_file:
+      - ./api.env
+    networks:
+      - staging
+    ports:
+      - '8000:8000'
+    command: python manage.py runserver 0.0.0.0:8000
+    container_name: 'api'
+    depends_on:
+      - db
+
+volumes:
+  db:
+    external: true
+networks:
+   staging:
