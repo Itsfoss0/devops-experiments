@@ -20,7 +20,7 @@ services:
     ports:
       - '8000:8000'
     command: python manage.py runserver 0.0.0.0:8000
-    container_name: 'api'
+    # container_name: 'api'
     depends_on:
       - db
 
